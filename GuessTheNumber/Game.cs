@@ -13,29 +13,33 @@ namespace GuessTheNumber
             Random rnd = new Random();
             int randomNumber = rnd.Next(0, 101);
             int inputNumber;
+            bool successfullyParsed;
 
             Console.WriteLine("Try to guess the number!");
 
             do
             {
                 Console.Write("Your number: ");
-                inputNumber = int.Parse(Console.ReadLine());
+                successfullyParsed = int.TryParse(Console.ReadLine(), out inputNumber);
 
-                if(inputNumber == randomNumber)
+                if (successfullyParsed == false)
                 {
-                    Console.WriteLine("You guessed the number!");
-                    return;
+                    Console.WriteLine("That is not an integer number, try again.");
+                    continue;
                 }
-                else if (randomNumber > inputNumber)
+
+                if (randomNumber > inputNumber)
                 {
                     Console.WriteLine("Your number is too small.");
                 }
-                else
+                else if (randomNumber < inputNumber)
                 {
                     Console.WriteLine("Your number is too big.");
                 }
 
-            } while (true);
+            } while (inputNumber != randomNumber);
+
+            Console.WriteLine("You guessed the number!");
         }
     }
 }
